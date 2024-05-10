@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Mining Tycoon</title>
+</head>
+<body>
+    <h1>Idle Mining Tycoon</h1>
+    <p>Money: $<span id="money">0</span></p>
+    <p>Gold: <span id="gold">0</span></p>
+    <button onclick="mineGold()">Mine Gold</button>
+    <button onclick="upgradeMine()">Upgrade Mine (Cost: $100)</button>
+
+    <script>
+        let money = 0;
+        let gold = 0;
+        let mineLevel = 1;
+        const upgradeCost = 100;
+
+        function mineGold() {
+            gold += mineLevel;
+            money += mineLevel * 10; // Assuming each unit of gold sells for $10
+            updateDisplay();
+        }
+
+        function upgradeMine() {
+            if (money >= upgradeCost) {
+                money -= upgradeCost;
+                mineLevel++;
+                updateDisplay();
+            } else {
+                alert("Not enough money to upgrade the mine!");
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("money").innerText = Math.floor(money);
+            document.getElementById("gold").innerText = Math.floor(gold);
+        }
+
+        // Auto mining loop
+        setInterval(function() {
+            gold += mineLevel * 0.1; // Assuming mine produces 0.1 gold per second per level
+            money += mineLevel * 10 * 0.1; // Assuming each unit of gold sells for $10 and produced per second
+            updateDisplay();
+        }, 1000);
+    </script>
+</body>
+</html>
